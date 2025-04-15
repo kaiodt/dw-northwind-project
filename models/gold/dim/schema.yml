@@ -239,91 +239,147 @@ models:
     columns:
       - name: customer_sk
         description: "Surrogate key for the customer dimension."
-        tests:
+        data_tests:
           - not_null
           - unique
 
       - name: customer_id
         description: "Business key identifying the customer."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_company_name
         description: "Company name of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_contact_name
         description: "Contact name of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_contact_title
         description: "Contact title of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_address
         description: "Address of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_city
         description: "City where the customer is located. SCD Type 2."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_region
         description: "Region where the customer is located. SCD Type 2."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_postal_code
         description: "Postal code of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_country
         description: "Country where the customer is located. SCD Type 2."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_phone
         description: "Phone number of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: customer_fax
         description: "Fax number of the customer. SCD Type 1."
-        tests:
+        data_tests:
           - not_null
 
       - name: last_modified
         description: "Last modified timestamp from Bronze layer."
-        tests:
+        data_tests:
           - not_null
 
       - name: silver_loaded_at
         description: "Timestamp when the record was loaded into the Silver layer."
-        tests:
+        data_tests:
           - not_null
 
       - name: gold_loaded_at
         description: "Timestamp when the record was loaded into the Gold layer."
-        tests:
+        data_tests:
           - not_null
 
       - name: valid_from
         description: "Start of the validity period for this version of the record."
-        tests:
+        data_tests:
           - not_null
 
       - name: valid_to
         description: "End of the validity period for this version of the record."
-        tests:
+        data_tests:
           - not_null
 
       - name: is_current
         description: "Flag indicating whether the record version is the current one."
-        tests:
+        data_tests:
           - not_null
+
+
+  - name: dim_shippers
+    description: "Historical dimension for shippers with SCD Type 1 tracking."
+    columns:
+      - name: shipper_sk
+        description: "Surrogate key for the shipper dimension."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: shipper_id
+        description: "Business key identifying the shipper."
+        data_tests:
+          - not_null
+
+      - name: shipper_company_name
+        description: "Company name of the shipper. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: shipper_phone
+        description: "Phone number of the shipper. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null
+
+      - name: valid_from
+        description: "Start of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: valid_to
+        description: "End of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: is_current
+        description: "Flag indicating whether the record version is the current one."
+        data_tests:
+          - not_null
+

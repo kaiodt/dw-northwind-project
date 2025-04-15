@@ -32,9 +32,10 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS customer_id
+    DISTINCT customer_id
 
-  WHERE 1 = 0
+  FROM
+    "DW_GOLD"."dbo"."dim_customers"
 
   
 ),
@@ -71,6 +72,47 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.customer_sk,
+    existing.customer_id,
+    existing.customer_company_name,
+    existing.customer_contact_name,
+    existing.customer_contact_title,
+    existing.customer_address,
+    existing.customer_city,
+    existing.customer_region,
+    existing.customer_postal_code,
+    existing.customer_country,
+    existing.customer_phone,
+    existing.customer_fax,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(
+      DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME
+    ) AS valid_to,
+    0 AS is_current
+
+  FROM
+    "DW_GOLD"."dbo"."dim_customers" AS existing
+    INNER JOIN staged_prepared
+      ON existing.customer_id = staged_prepared.customer_id
+  
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(existing.customer_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.customer_city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.customer_region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.customer_country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(staged_prepared.customer_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.customer_city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.customer_region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.customer_country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
 
   
 
