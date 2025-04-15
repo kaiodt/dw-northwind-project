@@ -383,3 +383,127 @@ models:
         data_tests:
           - not_null
 
+
+  - name: dim_employees
+    description: "Historical dimension for employees with SCD Type 2 tracking for city, region, country, and reports_to."
+    columns:
+      - name: employee_sk
+        description: "Surrogate key for the employee dimension."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: employee_id
+        description: "Business key identifying the employee."
+        data_tests:
+          - not_null
+
+      - name: employee_last_name
+        description: "Last name of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_first_name
+        description: "First name of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_title
+        description: "Job title of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_title_of_courtesy
+        description: "Courtesy title of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_birth_date
+        description: "Birth date of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_hire_date
+        description: "Hire date of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_address
+        description: "Street address of the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_city
+        description: "City where the employee resides. SCD Type 2."
+        data_tests:
+          - not_null
+
+      - name: employee_region
+        description: "Region of residence. SCD Type 2."
+        data_tests:
+          - not_null
+
+      - name: employee_postal_code
+        description: "Postal code of the employee's address. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_country
+        description: "Country of residence. SCD Type 2."
+        data_tests:
+          - not_null
+
+      - name: employee_home_phone
+        description: "Home phone number. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_extension
+        description: "Phone extension. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_notes
+        description: "Additional notes about the employee. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: employee_reports_to
+        description: "Manager of the employee (employee_id). SCD Type 2."
+        data_tests:
+          - not_null
+
+      - name: employee_photo_path
+        description: "Path to the employee's photo. SCD Type 1."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null
+
+      - name: valid_from
+        description: "Start of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: valid_to
+        description: "End of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: is_current
+        description: "Indicates whether the record is the most recent version."
+        data_tests:
+          - not_null

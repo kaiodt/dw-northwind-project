@@ -21,11 +21,11 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS shipper_id
+    DISTINCT shipper_id
   
-  WHERE
-    1 = 0
-  
+  FROM
+    "DW_GOLD"."dbo"."dim_shippers"
+
   
 ),
 
@@ -53,6 +53,39 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.shipper_sk,
+    existing.shipper_id,
+    existing.shipper_company_name,
+    existing.shipper_phone,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(
+      DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME
+    ) AS valid_to,
+    0 AS is_current
+
+  FROM
+    "DW_GOLD"."dbo"."dim_shippers" AS existing
+    INNER JOIN staged_prepared
+      ON existing.shipper_id = staged_prepared.shipper_id
+  
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), coalesce(cast(existing.shipper_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_')), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), coalesce(cast(staged_prepared.shipper_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_')), '')), 2))
+
 
   
 
