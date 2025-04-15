@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: SLV_ORDERS__orders
+    description: "Contains order information including customer and employee details and order status (cleaned)."
+    columns:
+      - name: order_id
+        description: "Unique identifier of the order."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Identifier of the customer who placed the order."
+        
+      - name: employee_id
+        description: "Identifier of the employee who processed the order."
+        
+      - name: order_date
+        description: "Date when the order was placed."
+        
+      - name: required_date
+        description: "Date when the order is required to be delivered."
+        
+      - name: shipped_date
+        description: "Date when the order was shipped."
+        
+      - name: ship_via
+        description: "Identifier of the shipper used for the order delivery."
+        
+      - name: freight
+        description: "Freight cost associated with the order."
+        
+      - name: ship_name
+        description: "Name of the recipient for the shipment."
+        
+      - name: ship_address
+        description: "Address where the order is to be shipped."
+        
+      - name: ship_city
+        description: "City where the order is to be shipped."
+      
+      - name: ship_region
+        description: "Region or state where the order is to be shipped."
+      
+      - name: ship_postal_code
+        description: "Postal code of the shipment address."
+      
+      - name: ship_country
+        description: "Country where the order is to be shipped."
+      
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null
+
+
+  - name: SLV_ORDERS__order_details
+    description: "Contains detailed information about the products in each order (cleaned)."
+    columns:
+      - name: order_detail_id
+        description: "Unique identifier of the order item."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Unique identifier of the order."
+        data_tests:
+          - not_null
+
+      - name: product_id
+        description: "Identifier of the product in the order."
+        data_tests:
+          - not_null
+        
+      - name: unit_price
+        description: "Price per unit of the product at the time of the order."
+        
+      - name: quantity
+        description: "Quantity of the product ordered."
+        
+      - name: discount
+        description: "Discount applied to the product in the order."
+        
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null

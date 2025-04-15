@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: SLV_PRODUCTS__categories
+    description: "Contains categories assigned to products for classification (cleaned)."
+    columns:
+      - name: category_id
+        description: "Unique identifier of the category."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: category_name
+        description: "Name of the category."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: description
+        description: "Detailed description of the category."
+
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+      
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null
+
+
+  - name: SLV_PRODUCTS__suppliers
+    description: "Contains information about suppliers who provide the products (cleaned)."
+    columns:
+      - name: supplier_id
+        description: "Unique identifier of the supplier."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: company_name
+        description: "Name of the supplier company."
+        data_tests:
+          - not_null
+
+      - name: contact_name
+        description: "Name of the contact person at the supplier company."
+
+      - name: contact_title
+        description: "Job title of the contact person."
+      
+      - name: address
+        description: "Address of the supplier company."
+      
+      - name: city
+        description: "City where the supplier company is located."
+      
+      - name: region
+        description: "Region or state where the supplier company is located."
+      
+      - name: postal_code
+        description: "Postal code of the supplier company's address."
+      
+      - name: country
+        description: "Country where the supplier company is located."
+      
+      - name: phone
+        description: "Phone number of the supplier company."
+      
+      - name: fax
+        description: "Fax number of the supplier company."
+      
+      - name: home_page
+        description: "URL of the supplier company's homepage."
+      
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+      
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null
+
+
+  - name: SLV_PRODUCTS__products
+    description: "Contains detailed information about products offered by the company (cleaned)."
+    columns:
+      - name: product_id
+        description: "Unique identifier of the product."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: product_name
+        description: "Name of the product."
+        data_tests:
+          - not_null
+      
+      - name: supplier_id
+        description: "Identifier of the supplier providing the product."
+      
+      - name: category_id
+        description: "Identifier of the category to which the product belongs."
+      
+      - name: quantity_per_unit
+        description: "Description of the quantity in which the product is sold."
+      
+      - name: unit_price
+        description: "Price per unit of the product."
+      
+      - name: units_in_stock
+        description: "Number of units of the product currently in stock."
+      
+      - name: units_on_order
+        description: "Number of units of the product currently on order."
+      
+      - name: reorder_level
+        description: "Minimum number of units that should be in stock before reordering."
+      
+      - name: discontinued
+        description: "Indicates whether the product is discontinued (1) or not (0)."
+      
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+      
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null

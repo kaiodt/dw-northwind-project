@@ -1,0 +1,102 @@
+version: 2
+
+sources:
+  - name: db_products
+    database: DW_BRONZE
+    schema: dbo
+    description: "Source tables related to product information."
+    tables:
+      - name: DB_PRODUCTS__categories
+        description: "Contains categories assigned to products for classification."
+        columns:
+         - name: category_id
+           description: "Unique identifier of the category."
+
+         - name: category_name
+           description: "Name of the category."
+
+         - name: description
+           description: "Detailed description of the category."
+
+         - name: last_modified
+           description: "Timestamp of the last modification of the original record."
+
+
+      - name: DB_PRODUCTS__suppliers
+        description: "Contains information about suppliers who provide the products."
+        columns:
+          - name: supplier_id
+            description: "Unique identifier of the supplier."
+          
+          - name: company_name
+            description: "Name of the supplier company."
+          
+          - name: contact_name
+            description: "Name of the contact person at the supplier company."
+          
+          - name: contact_title
+            description: "Job title of the contact person."
+          
+          - name: address
+            description: "Address of the supplier company."
+          
+          - name: city
+            description: "City where the supplier company is located."
+          
+          - name: region
+            description: "Region or state where the supplier company is located."
+          
+          - name: postal_code
+            description: "Postal code of the supplier company's address."
+          
+          - name: country
+            description: "Country where the supplier company is located."
+          
+          - name: phone
+            description: "Phone number of the supplier company."
+          
+          - name: fax
+            description: "Fax number of the supplier company."
+          
+          - name: home_page
+            description: "URL of the supplier company's homepage."
+          
+          - name: last_modified
+            description: "Timestamp of the last modification of the original record."
+
+
+      - name: DB_PRODUCTS__products
+        description: "Contains detailed information about products offered by the company."
+        columns:
+          - name: product_id
+            description: "Unique identifier of the product."
+          
+          - name: product_name
+            description: "Name of the product."
+          
+          - name: supplier_id
+            description: "Identifier of the supplier providing the product."
+          
+          - name: category_id
+            description: "Identifier of the category to which the product belongs."
+          
+          - name: quantity_per_unit
+            description: "Description of the quantity in which the product is sold."
+          
+          - name: unit_price
+            description: "Price per unit of the product."
+          
+          - name: units_in_stock
+            description: "Number of units of the product currently in stock."
+          
+          - name: units_on_order
+            description: "Number of units of the product currently on order."
+          
+          - name: reorder_level
+            description: "Minimum number of units that should be in stock before reordering."
+          
+          - name: discontinued
+            description: "Indicates whether the product is discontinued (1) or not (0)."
+          
+          - name: last_modified
+            description: "Timestamp of the last modification of the original record."

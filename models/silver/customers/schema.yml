@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: SLV_CUSTOMERS__customers
+    description: "Contains customer information including contact details and address (cleaned)."
+    columns:
+      - name: customer_id
+        description: "Unique identifier of the customer."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: company_name
+        description: "Name of the customer's company."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: contact_name
+        description: "Name of the contact person at the customer's company."
+
+      - name: contact_title
+        description: "Title of the contact person at the customer's company."
+
+      - name: address
+        description: "Address of the customer's company."
+      
+      - name: city
+        description: "City where the customer is located."
+      
+      - name: region
+        description: "Region or state where the customer is located."
+      
+      - name: postal_code
+        description: "Postal code of the customer's address."
+      
+      - name: country
+        description: "Country where the customer is located."
+      
+      - name: phone
+        description: "Phone number of the customer."
+      
+      - name: fax
+        description: "Fax number of the customer."
+      
+      - name: last_modified
+        description: "Timestamp of the last modification of the original record."
+        data_tests:
+          - not_null
+      
+      - name: silver_loaded_at
+        description: "Timestamp of when the record was loaded into the silver layer."
+        data_tests:
+          - not_null

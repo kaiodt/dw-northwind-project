@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: db_customers
+    database: DW_BRONZE
+    schema: dbo
+    description: "Source tables related to customer information."
+    tables:
+      - name: DB_CUSTOMERS__customers
+        description: "Contains customer information including contact details and address."
+        columns:
+          - name: customer_id
+            description: "Unique identifier of the customer."
+            
+          - name: company_name
+            description: "Name of the customer's company."
+            
+          - name: contact_name
+            description: "Name of the contact person at the customer's company."
+            
+          - name: contact_title
+            description: "Job title of the contact person."
+            
+          - name: address
+            description: "Address of the customer's company."
+            
+          - name: city
+            description: "City where the customer is located."
+            
+          - name: region
+            description: "Region or state where the customer is located."
+            
+          - name: postal_code
+            description: "Postal code of the customer's address."
+            
+          - name: country
+            description: "Country where the customer is located."
+            
+          - name: phone
+            description: "Phone number of the customer."
+            
+          - name: fax
+            description: "Fax number of the customer."
+          
+          - name: last_modified
+            description: "Timestamp of the last modification of the original record."

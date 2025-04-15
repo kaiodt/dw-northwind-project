@@ -1,0 +1,102 @@
+version: 2
+
+macros:
+  - name: remove_extra_spaces
+    description: |
+      Removes extra spaces from a string, leaving only single spaces between words.
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+        - It replaces multiple spaces with a single space and trims leading and trailing spaces.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: capitalize_first_letter_only
+    description: |
+      Capitalizes the first letter of a string and converts the rest to lowercase.
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+        - It splits the string by spaces, capitalizes the first letter of the first word, and converts the rest to lowercase.
+        - It then joins the words back together with spaces.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: titlecase_with_separators
+    description: |
+      Converts a string to title case, capitalizing the first letter of each word and converting the rest to lowercase, handling special cases for hyphens (`-`) and slashes (`/`).
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+        - It splits the string by spaces, hyphens, and slashes, capitalizes the first letter of each word, and converts the rest to lowercase.
+        - It then joins the words back together with spaces, ensuring that the original hyphens and slashes are preserved.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: titlecase_without_separators
+    description: |
+      Converts a string to title case, capitalizing the first letter of each word and converting the rest to lowercase, without handling special cases for separators.
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+        - It splits the string by spaces, capitalizes the first letter of each word, and converts the rest to lowercase.
+        - It then joins the words back together with spaces.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: titlecase_country
+    description: |
+      Converts a country name to titlecase, handling special cases for USA and UK.
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+        - It splits the string by spaces, hyphens, and slashes, capitalizes the first letter of each word, and converts the rest to lowercase.
+        - It then joins the words back together with spaces, ensuring that the original hyphens and slashes are preserved.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: extract_within_delimiters
+    description: |
+      Extracts a substring from a string that is enclosed within specified delimiters.
+
+        - If the input string is empty or consists only of a hyphen (`-`), it returns `NULL`.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+      - name: delimiter
+        type: string
+        description: The delimiter that marks the start and end of the substring to be extracted.
+
+
+  - name: null_if_negative
+    description: |
+      Returns `NULL` if the input value is a negative number, otherwise returns the input value.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+
+  - name: null_if_invalid
+    description: |
+      Returns NULL if the input value is not in the specified list of valid values, otherwise returns the input value.
+    arguments:
+      - name: col
+        type: column
+        description: The name of the column to be transformed.
+
+      - name: valid_values
+        type: list
+        description: A list of valid values.
