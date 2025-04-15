@@ -730,3 +730,67 @@ models:
           - accepted_values:
               values: [0, 1]
 
+
+  - name: dim_orders
+    description: "Dimension containing shipment and freight details for orders. No SCD history maintained."
+    columns:
+      - name: order_sk
+        description: "Surrogate key for the order dimension."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Business key identifying the order."
+        data_tests:
+          - not_null
+
+      - name: ship_to_name
+        description: "Name of the recipient for the shipment."
+        data_tests:
+          - not_null
+
+      - name: ship_to_address
+        description: "Shipping address of the order."
+        data_tests:
+          - not_null
+
+      - name: ship_to_city
+        description: "Shipping city."
+        data_tests:
+          - not_null
+
+      - name: ship_to_region
+        description: "Shipping region or state."
+        data_tests:
+          - not_null
+
+      - name: ship_to_postal_code
+        description: "Shipping postal code."
+        data_tests:
+          - not_null
+
+      - name: ship_to_country
+        description: "Shipping country."
+        data_tests:
+          - not_null
+
+      - name: freight
+        description: "Freight cost associated with the order."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null
