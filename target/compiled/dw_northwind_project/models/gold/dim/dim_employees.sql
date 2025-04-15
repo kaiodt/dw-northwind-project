@@ -38,10 +38,10 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS employee_id
+    DISTINCT employee_id
   
-  WHERE
-    1 = 0
+  FROM
+    "DW_GOLD"."dbo"."dim_employees"
 
   
 ),
@@ -84,6 +84,51 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.employee_sk,
+    existing.employee_id,
+    existing.employee_last_name,
+    existing.employee_first_name,
+    existing.employee_title,
+    existing.employee_title_of_courtesy,
+    existing.employee_birth_date,
+    existing.employee_hire_date,
+    existing.employee_address,
+    existing.employee_city,
+    existing.employee_region,
+    existing.employee_postal_code,
+    existing.employee_country,
+    existing.employee_home_phone,
+    existing.employee_extension,
+    existing.employee_notes,
+    existing.employee_reports_to,
+    existing.employee_photo_path,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME) AS valid_to,
+    0 AS is_current
+
+  FROM
+    "DW_GOLD"."dbo"."dim_employees" AS existing
+    INNER JOIN staged_prepared
+      ON existing.employee_id = staged_prepared.employee_id
+  
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(existing.employee_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.reports_to as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(staged_prepared.employee_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.employee_city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.employee_region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.employee_country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.employee_reports_to as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
 
   
 

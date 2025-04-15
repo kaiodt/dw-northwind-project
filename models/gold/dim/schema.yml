@@ -49,7 +49,7 @@ models:
           - not_null
 
       - name: is_current
-        description: "Flag indicating if the record version is the current one."
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
 
@@ -149,7 +149,7 @@ models:
           - not_null
 
       - name: is_current
-        description: "Flag indicating if the record version is the current one."
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
 
@@ -229,7 +229,7 @@ models:
           - not_null
 
       - name: is_current
-        description: "Flag to identify if the version is the current one."
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
 
@@ -324,7 +324,7 @@ models:
           - not_null
 
       - name: is_current
-        description: "Flag indicating whether the record version is the current one."
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
 
@@ -379,7 +379,7 @@ models:
           - not_null
 
       - name: is_current
-        description: "Flag indicating whether the record version is the current one."
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
 
@@ -504,6 +504,65 @@ models:
           - not_null
 
       - name: is_current
-        description: "Indicates whether the record is the most recent version."
+        description: "Flag indicating whether the record version is the most recent."
+        data_tests:
+          - not_null
+
+  - name: dim_territories
+    description: "Historical dimension for sales territories, enriched with region data and tracked via SCD Type 2."
+    columns:
+      - name: territory_sk
+        description: "Surrogate key for the territory dimension."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: territory_id
+        description: "Business key identifying the territory."
+        data_tests:
+          - not_null
+
+      - name: territory_description
+        description: "Description of the sales territory."
+        data_tests:
+          - not_null
+
+      - name: region_id
+        description: "Identifier for the region associated with the territory."
+        data_tests:
+          - not_null
+
+      - name: region_description
+        description: "Description of the region."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null
+
+      - name: valid_from
+        description: "Start of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: valid_to
+        description: "End of the validity period for this version of the record."
+        data_tests:
+          - not_null
+
+      - name: is_current
+        description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
