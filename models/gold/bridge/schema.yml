@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: bridge_employees_territories
+    description: "Bridge table linking employees and territories using surrogate keys from their respective dimensions."
+    columns:
+      - name: employee_sk
+        description: "Surrogate key of the employee from dim_employees."
+        data_tests:
+          - not_null
+
+      - name: territory_sk
+        description: "Surrogate key of the territory from dim_territories."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null

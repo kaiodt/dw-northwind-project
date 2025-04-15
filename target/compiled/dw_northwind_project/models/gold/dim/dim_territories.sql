@@ -41,10 +41,10 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS territory_id
+    DISTINCT territory_id
   
-  WHERE
-    1 = 0
+  FROM
+    "DW_GOLD"."dbo"."dim_territories"
 
   
 ),
@@ -74,6 +74,38 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.territory_sk,
+    existing.territory_id,
+    existing.territory_description,
+    existing.region_id,
+    existing.region_description,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME) AS valid_to,
+    0 AS is_current
+  
+  FROM
+    "DW_GOLD"."dbo"."dim_territories" AS existing
+    INNER JOIN staged_prepared
+      ON existing.territory_id = staged_prepared.territory_id
+
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(existing.territory_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.territory_description as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.region_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.region_description as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(staged_prepared.territory_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.territory_description as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.region_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.region_description as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
 
   
 
