@@ -14,8 +14,8 @@ WITH staged AS (
     COALESCE(units_on_order, -1) AS units_on_order,
     COALESCE(reorder_level, -1) AS reorder_level,
     COALESCE(discontinued, -1) AS discontinued,
-    last_modified,
-    silver_loaded_at,
+    COALESCE(last_modified, CAST('1900-01-01' AS DATETIME)) AS last_modified,
+    COALESCE(silver_loaded_at, CAST('1900-01-01' AS DATETIME)) AS silver_loaded_at,
     CAST(SYSDATETIME() AS DATETIME) AS gold_loaded_at
 
   FROM
@@ -29,9 +29,10 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS product_id
+    DISTINCT product_id
 
-  WHERE 1 = 0
+  FROM
+    "DW_GOLD"."dbo"."dim_products"
 
   
 ),
@@ -65,6 +66,44 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.product_sk,
+    existing.product_id,
+    existing.product_name,
+    existing.quantity_per_unit,
+    existing.unit_price,
+    existing.units_in_stock,
+    existing.units_on_order,
+    existing.reorder_level,
+    existing.discontinued,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(
+      DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME
+    ) AS valid_to,
+    0 AS is_current
+
+  FROM
+    "DW_GOLD"."dbo"."dim_products" AS existing
+    INNER JOIN staged_prepared ON
+      existing.product_id = staged_prepared.product_id
+
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(existing.product_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.unit_price as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.discontinued as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(staged_prepared.product_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.unit_price as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.discontinued as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
 
   
 

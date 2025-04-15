@@ -23,8 +23,8 @@ WITH staged AS (
     COALESCE(units_on_order, -1) AS units_on_order,
     COALESCE(reorder_level, -1) AS reorder_level,
     COALESCE(discontinued, -1) AS discontinued,
-    last_modified,
-    silver_loaded_at,
+    COALESCE(last_modified, CAST('1900-01-01' AS DATETIME)) AS last_modified,
+    COALESCE(silver_loaded_at, CAST('1900-01-01' AS DATETIME)) AS silver_loaded_at,
     CAST(SYSDATETIME() AS DATETIME) AS gold_loaded_at
 
   FROM
