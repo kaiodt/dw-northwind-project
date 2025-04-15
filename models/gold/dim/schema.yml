@@ -566,3 +566,167 @@ models:
         description: "Flag indicating whether the record version is the most recent."
         data_tests:
           - not_null
+
+  - name: dim_dates
+    description: "Dimension table for dates, used for time-based analysis."
+    columns:
+      - name: date_sk
+        description: "Surrogate key for the date dimension. Uses the YYYYMMDD format."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_day
+        description: "Date in YYYY-MM-DD format."
+        data_tests:
+          - not_null
+
+      - name: day
+        description: "Day of the month (1-31)."
+        data_tests:
+          - not_null
+
+      - name: month
+        description: "Month of the year (1-12)."
+        data_tests:
+          - not_null
+
+      - name: month_name
+        description: "Full name of the month (e.g., January, February)."
+        data_tests:
+          - not_null
+
+      - name: quarter
+        description: "Quarter of the year (1-4)."
+        data_tests:
+          - not_null
+            - date_day
+  
+      - name: quarter_name
+        description: "Full name of the quarter (e.g., Q1, Q2)."
+        data_tests:
+          - not_null
+      
+      - name: year
+        description: "Year (e.g., 2025)."
+        data_tests:
+          - not_null
+
+      - name: week
+        description: "Week of the year (1-53)."
+        data_tests:
+          - not_null
+
+      - name: day_of_week
+        description: "Day of the week (1-7, where 1 is Sunday)."
+        data_tests:
+          - not_null
+
+      - name: day_name
+        description: "Full name of the day (e.g., Sunday, Monday)."
+        data_tests:
+          - not_null
+
+      - name: year_week
+        description: "Year and week in the format YYYY-Www (e.g., 2025-W17)."
+        data_tests:
+          - not_null
+
+      - name: year_month
+        description: "Year and month in the format YYYY-MM (e.g., 2025-04)."
+        data_tests:
+          - not_null
+
+      - name: year_quarter
+        description: "Year and quarter in the format YYYY-Qq (e.g., 2025-Q2)."
+        data_tests:
+          - not_null
+      
+      - name: is_weekend
+        description: "Flag indicating whether the date falls on a weekend (1 for weekend, 0 for weekday)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+  - name: vw_dim_dates_current
+    description: "Current view of the date dimension, filtered to show only current records."
+    columns:
+      - name: date_sk
+        description: "Surrogate key for the date dimension. Uses the YYYYMMDD format."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_day
+        description: "Date in YYYY-MM-DD format."
+        data_tests:
+          - not_null
+
+      - name: day
+        description: "Day of the month (1-31)."
+        data_tests:
+          - not_null
+
+      - name: month
+        description: "Month of the year (1-12)."
+        data_tests:
+          - not_null
+
+      - name: month_name
+        description: "Full name of the month (e.g., January, February)."
+        data_tests:
+          - not_null
+
+      - name: quarter
+        description: "Quarter of the year (1-4)."
+        data_tests:
+          - not_null
+
+      - name: quarter_name
+        description: "Full name of the quarter (e.g., Q1, Q2)."
+        data_tests:
+          - not_null
+
+      - name: year
+        description: "Year (e.g., 2025)."
+        data_tests:
+          - not_null
+
+      - name: week
+        description: "Week of the year (1-53)."
+        data_tests:
+          - not_null
+
+      - name: day_of_week
+        description: "Day of the week (1-7, where 1 is Sunday)."
+        data_tests:
+          - not_null
+
+      - name: day_name
+        description: "Full name of the day (e.g., Sunday, Monday)."
+        data_tests:
+          - not_null
+
+      - name: year_week
+        description: "Year and week in the format YYYY-Www (e.g., 2025-W17)."
+        data_tests:
+          - not_null
+
+      - name: year_month
+        description: "Year and month in the format YYYY-MM (e.g., 2025-04)."
+        data_tests:
+          - not_null
+
+      - name: year_quarter
+        description: "Year and quarter in the format YYYY-Qq (e.g., 2025-Q2)."
+        data_tests:
+          - not_null
+      
+      - name: is_weekend
+        description: "Flag indicating whether the date falls on a weekend (1 for weekend, 0 for weekday)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
