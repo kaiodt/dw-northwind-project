@@ -33,9 +33,10 @@ existing_keys AS (
   
 
   SELECT
-    CAST(NULL AS INT) AS supplier_id
+    DISTINCT supplier_id
 
-  WHERE 1 = 0
+  FROM
+    "DW_GOLD"."dbo"."dim_product_suppliers"
 
   
 ),
@@ -73,6 +74,48 @@ staged_prepared AS (
 
 final_data AS (
   SELECT * FROM staged_prepared
+
+  
+
+  UNION ALL
+
+  SELECT
+    existing.supplier_sk,
+    existing.supplier_id,
+    existing.supplier_company_name,
+    existing.supplier_contact_name,
+    existing.supplier_contact_title,
+    existing.supplier_address,
+    existing.supplier_city,
+    existing.supplier_region,
+    existing.supplier_postal_code,
+    existing.supplier_country,
+    existing.supplier_phone,
+    existing.supplier_fax,
+    existing.supplier_homepage,
+    existing.last_modified,
+    existing.silver_loaded_at,
+    existing.gold_loaded_at,
+    existing.valid_from,
+    CAST(
+      DATEADD(SECOND, -1, staged_prepared.gold_loaded_at) AS DATETIME
+    ) AS valid_to,
+    0 AS is_current
+
+  FROM
+    "DW_GOLD"."dbo"."dim_product_suppliers" AS existing
+    INNER JOIN staged_prepared ON
+      existing.supplier_id = staged_prepared.supplier_id
+  
+  WHERE
+    existing.is_current = 1 AND
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(existing.supplier_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.supplier_city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.supplier_region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(existing.supplier_country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
+    !=
+    
+    lower(convert(varchar(50), hashbytes('md5', coalesce(convert(varchar(8000), concat(coalesce(cast(staged_prepared.supplier_id as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.supplier_city as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.supplier_region as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(staged_prepared.supplier_country as VARCHAR(8000)), '_dbt_utils_surrogate_key_null_'))), '')), 2))
+
 
   
 
