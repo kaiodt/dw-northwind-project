@@ -1,0 +1,51 @@
+{
+    "path_count": 194,
+    "parsed_path_count": 3,
+    "static_analysis_path_count": 2,
+    "static_analysis_parsed_path_count": 1,
+    "is_partial_parse_enabled": true,
+    "is_static_analysis_enabled": true,
+    "read_files_elapsed": 2.7821768000139855,
+    "load_macros_elapsed": 0.00046999999904073775,
+    "parse_project_elapsed": 0.26644429998123087,
+    "patch_sources_elapsed": 1.829999382607639e-05,
+    "process_manifest_elapsed": 0.0013761000009253621,
+    "load_all_elapsed": 3.234588299994357,
+    "projects": [
+        {
+            "project_name": "dw_northwind_project",
+            "elapsed": 0.2663126999977976,
+            "parsers": [
+                {
+                    "parser": "model",
+                    "elapsed": 0.12919720000354573,
+                    "parsed_path_count": 2
+                },
+                {
+                    "parser": "test",
+                    "elapsed": 0.1371031999879051,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 3
+        },
+        {
+            "project_name": "dbt_sqlserver",
+            "elapsed": 0,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt_fabric",
+            "elapsed": 0,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt",
+            "elapsed": 0,
+            "parsers": [],
+            "parsed_path_count": 0
+        }
+    ]
+}
