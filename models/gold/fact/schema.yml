@@ -1,0 +1,100 @@
+version: 2
+
+models:
+  - name: fact_orders
+    description: "Fact table containing order line-level data including products, customers, employees, and shipping information."
+    columns:
+      - name: order_detail_id
+        description: "Unique identifier for the order detail (fact grain)."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: order_sk
+        description: "Surrogate key for the order dimension."
+        data_tests:
+          - not_null
+
+      - name: customer_sk
+        description: "Surrogate key for the customer dimension."
+        data_tests:
+          - not_null
+
+      - name: employee_sk
+        description: "Surrogate key for the employee dimension."
+        data_tests:
+          - not_null
+
+      - name: product_sk
+        description: "Surrogate key for the product dimension."
+        data_tests:
+          - not_null
+
+      - name: product_category_sk
+        description: "Surrogate key for the product category dimension."
+        data_tests:
+          - not_null
+
+      - name: product_supplier_sk
+        description: "Surrogate key for the product supplier dimension."
+        data_tests:
+          - not_null
+
+      - name: shipper_sk
+        description: "Surrogate key for the shipper dimension."
+        data_tests:
+          - not_null
+
+      - name: order_date_sk
+        description: "Surrogate key for the order date."
+
+      - name: required_date_sk
+        description: "Surrogate key for the required date."
+
+      - name: shipped_date_sk
+        description: "Surrogate key for the shipped date."
+
+      - name: quantity
+        description: "Number of items ordered."
+        data_tests:
+          - not_null
+
+      - name: unit_price
+        description: "Price per unit of product."
+        data_tests:
+          - not_null
+
+      - name: unit_discount
+        description: "Discount applied per unit."
+        data_tests:
+          - not_null
+
+      - name: gross_amount
+        description: "Total value before discount (unit_price * quantity)."
+        data_tests:
+          - not_null
+
+      - name: discount_amount
+        description: "Total discount amount (unit_price * quantity * discount)."
+        data_tests:
+          - not_null
+
+      - name: net_amount
+        description: "Net value after discount (gross - discount)."
+        data_tests:
+          - not_null
+
+      - name: last_modified
+        description: "Last modified timestamp from Bronze layer."
+        data_tests:
+          - not_null
+
+      - name: silver_loaded_at
+        description: "Timestamp when the record was loaded into the Silver layer."
+        data_tests:
+          - not_null
+
+      - name: gold_loaded_at
+        description: "Timestamp when the record was loaded into the Gold layer."
+        data_tests:
+          - not_null
